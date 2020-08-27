@@ -1,7 +1,6 @@
 var firstNumber = +prompt("Введите первое число:");
 var secondNumber = +prompt("Введите второе число:");
 var result;
-
 if(isNaN(firstNumber) || isNaN(secondNumber))
 {
     do{
@@ -13,15 +12,23 @@ if(isNaN(firstNumber) || isNaN(secondNumber))
 
 var sign = prompt("Введите знак нужной вам операции ('+' '-' '*' '/'):");
 
-if(sign !== "+" && sign !== "-" && sign !== "*" && sign !== "/") {
+if(checkSign(sign)) {
     do{
         var sign = prompt("Введите знак нужной вам операции ('+' '-' '*' '/'):");
-    }while(sign !== "+" && sign !== "-" && sign !== "*" && sign !== "/")
+    }while(checkSign(sign))
 } 
 
 alert(result = calculate(firstNumber,secondNumber,sign));
 
- 
+function checkSign(sign) {
+
+    if(sign !== "+" && sign !== "-" && sign !== "*" && sign !== "/") {
+
+        return true;
+
+    }
+} 
+
 function calcSum(numb1,numb2) {
     return numb1 + numb2;
 }
