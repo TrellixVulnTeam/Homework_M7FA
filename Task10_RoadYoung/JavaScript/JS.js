@@ -13,17 +13,18 @@ function byField(field) {
     return (a, b) => a[field] > b[field] ? 1 : -1;
 }
 
-function checkKey (arr,key) {
+function checkKey(arr, key) {
     let res = false;
     arr.forEach(item => {
-        if(item.hasOwnProperty(key)) {
+        if (item.hasOwnProperty(key)) {
             res = true;
         }
     });
     return res;
 }
+
 function sortByKey(arr, field) {
-    if(checkKey(arr,field)) {
+    if (checkKey(arr, field)) {
         return arr.slice().sort(byField(field));
     } else {
         console.log('Errrrr')
@@ -31,11 +32,11 @@ function sortByKey(arr, field) {
 }
 
 function getAverageAge(arr) {
-     let res =  arr.reduce((prev,item) => prev + item.age,0) / arr.length;
-     return res;
+    let res = arr.reduce((prev, item) => prev + item.age, 0) / arr.length;
+    return res;
 }
 
-sortedArr = sortByKey(users,'age');
+sortedArr = sortByKey(users, 'age');
 console.log(sortedArr);
 console.log(users);
 let Averege = getAverageAge(users);
