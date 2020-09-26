@@ -47,9 +47,8 @@ showInfo(student);
 
 // до
 let rainbow = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
-console.log(rainbow);
 // ваш код ...
 let [first, second, ...rest] = rainbow
-let rainbow2 = [rest , first, second];
+rainbow = [rest , first, second];
 // после
-console.log(rainbow2);
+console.log(rainbow);
