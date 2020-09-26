@@ -5,8 +5,7 @@ class Human {
         this.age = config.age;
     }
     getFullName() {
-        let str;
-        return str = this.name + " " + this.surname;
+        return this.name + " " + this.surname;
     }
     setFullName(fullName) {
         let splitedFullName = fullName.split(' ');
@@ -22,9 +21,9 @@ class Human {
     }
 }
 class Teacher extends Human {
-    constructor(config) {
-        super(config);
-        this.group = config.group;
+    constructor({name, surname, age, group}) {
+        super({name, surname, age});
+        this.group = group;
     }
     getListOfNamesByAverageMark() {
         let res = [];
@@ -50,9 +49,9 @@ class Teacher extends Human {
     }
 }
 class Student extends Human {
-    constructor(config) {
-        super(config);
-        this.marks = config.marks;
+    constructor({name, surname, age, marks}) {
+        super({name, surname, age});
+        this.marks = marks;
     }
     getFullName() {
         let str;
