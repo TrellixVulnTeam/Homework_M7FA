@@ -1,10 +1,31 @@
 <!DOCTYPE html>
-<html>
- <head>
-  <meta charset="utf-8" />
-  <title>Task1</title>
-  <script src="/123.js"></script>
- </head>
- <body>
-  <p>Привет, мир</p>
- </body>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/123.js"></script>
+</head>
+
+<body>
+
+    <form id='fill-out-form'>
+        <div>
+            Cat <input type="radio" name="who" checked class="radio" value="0">
+            Dog <input type="radio" name="who" class="radio" value="1">
+        </div>
+
+        <input type="text" placeholder="Цвет животного" id='color'>
+        <input type="text" placeholder="Порода животного" id='breed'>
+        <input type="text" placeholder="Имя животного" id='name'>
+        <input type="text" placeholder="Номер животного" id='number'>
+    </form>
+    <div>
+        <button id="describe">describe Animal</button>
+        <button id="get">get Animal</button>
+    </div>
+
+</body>
+
+</html>

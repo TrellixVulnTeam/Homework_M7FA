@@ -1,0 +1,65 @@
+section {
+    background-color: cadetblue;
+    padding: 10px;
+}
+
+#add-student-form {
+    padding: 10px;
+}
+#add-student-form button {
+    margin-left: 120px;
+}
+
+#add-student-form input {
+    border-radius: 2px;
+    padding: 2px;
+    width: 300px;
+}
+
+#add-student-form input:focus {
+    background-color: lightblue;
+    border: 3px solid #555;
+}
+
+#add-student-form label {
+    width: 80px;
+    font-size: 18px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+button {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 5px;
+    border: 2px solid blue;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 18px;
+    color: black;
+    background-color: white;
+    outline: none;
+}
+
+button:hover {
+    color: white;
+    background-color: blue;
+}
+button:active {
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+
+}
+button:enabled {
+    outline: none;
+}
+/* Second form */
+
+#list-of-students-div {
+    text-align: center;
+    padding: 5px;
+    font-size: 18px;
+    font-family: 'Times New Roman', Times, serif;
+}
+#list-of-students-div ol{
+    text-align: center;
+
+}
