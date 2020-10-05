@@ -1,85 +1,137 @@
-    // let listOfStudentsButton = document.querySelector('#list-of-students-button');
-    // listOfStudentsButton.onclick = function () {
-    //     let list = teacher.getListOfStudentsByAverageMark();
-    //     console.log(list);
-    // }
+class Human {
+    constructor(config) {
+        this.name = config.name;
+        this.surname = config.surname;
+        this.age = config.age;
+    }
+    getFullName() {
+        return this.name + " " + this.surname;
+    }
+    setFullName(fullName) {
+        let splitedFullName = fullName.split(' ');
+        this.name = splitedFullName[0];
+        this.surname = splitedFullName[1];
+    }
+    static createNewHuman() {
+        return new Human({
+            name: '',
+            surname: '',
+            age: ''
+        });
+    }
+}
+class Teacher extends Human {
+    constructor({
+        name,
+        surname,
+        age,
+        group
+    }) {
+        super({
+            name,
+            surname,
+            age
+        });
+        this.group = group;
+    }
+    getListOfNamesByAverageMark() {
+        let res = [];
+        this.group.sort((stud1, stud2) => stud1.averageMark() - stud2.averageMark()).forEach(stud => res.push(stud.name));
+        return res;
+    }
+    getListOfStudentsByAverageMark() {
+        let res = [];
+        this.group.sort((stud1, stud2) => stud1.averageMark() - stud2.averageMark()).forEach(stud => res.push(stud));
+        return res;
+    }
+    getStudentByName(name) {
+        return this.group.find(stud => stud.name == name);
+    }
+    removeStudentByName(name) {
+        this.group.forEach((stud, index, arr) => {
+            if (stud.name == name) {
+                arr.splice(index, 1);
+            }
+        })
+    }
+    updateStudentByName(student, name) {
+        this.group.find((stud, index, arr) => {
+            if (stud.name == name) {
+                arr.splice(index, 1, student);
+            }
+        })
+    }
+    addStudentInGroup(studentInfo) {
+        this.group.push(new Student(studentInfo));
+    }
+}
+class Student extends Human {
+    constructor({
+        name,
+        surname,
+        age,
+        marks
+    }) {
+        super({
+            name,
+            surname,
+            age
+        });
+        this.marks = marks;
+    }
+    getFullName() {
+        let str;
+        return str = "-student " + this.name + " " + this.surname;
+    }
+    averageMark() { // averageMark() - возвращает среднюю оценку
+        return this.marks.reduce((sum, item) => sum + item) / this.marks.length;
+    }
+    minMark() { // minMark() - возвращает минимальную оценку
+        return Math.min(...this.marks);
+    }
+    maxMark() { // maxMark() - возвращает максимальную оценку
+        return Math.max(...this.marks);
+    }
+}
+
+let teacher = new Teacher({
+    group: [],
+    name: "Oleg",
+    surname: "Olegovich",
+    age: 66,
+})
 
 window.onload = init;
 
 function init() {
-    let describe = document.querySelector('#describe');
-    let get = document.querySelector('#get');
-    console.log(describe, get);
+    // первая кнопка
+    let addStudentButton = document.querySelector('#add-student-button');
 
-    describe.onclick = function () {
+    addStudentButton.onclick = function () {
+        let addStudentForm = document.getElementById('add-student-form');
 
-        let fillOutForm = document.getElementById('fill-out-form');
-        let childForms = fillOutForm.children;
-        let radioValue = fillOutForm.elements.who.value;
-        
-        let color = childForms.color.value,
-            breed = childForms.breed.value,
-            name = childForms.name.value;
-            number = childForms.number.value;
-        
-        Animal.describeAnimal({
-            cat: +radioValue == 0,
-            dog: +radioValue == 1,
-            color,
-            breed,
+        let childForm = addStudentForm.children;
+
+        let name = addStudentForm.fName.value;
+        let surname = addStudentForm.lName.value;
+        let age = +addStudentForm.age.value;
+        let marks = addStudentForm.marks.value.split(' ').map(Number);
+
+        teacher.addStudentInGroup({
             name,
-            number: +number
+            surname,
+            age,
+            marks
         });
     }
-
-}
-
-class Animal {
-    static shalter = [];
-
-    constructor({
-        cat,
-        dog,
-        color,
-        breed,
-        name,
-        number
-    }) {
-            this.cat = cat,
-            this.dog = dog,
-            this.color = color,
-            this.breed = breed,
-            this.name = name,
-            this.number = number
-    }
-
-    static describeAnimal(data) {
-        Animal.setAnimal(new Animal(data))
-    }
-
-    static setAnimal(animal) {
-        console.log(animal);
-        Animal.shalter.push(animal);
-        console.log(Animal.shalter);
-
-    }
-    static getAnimals(key, value) {
-        return shalter.filter(function (animal, index) {
-            animal[key] === value;
+    // вторая кнопка
+    let listOfStudents = document.querySelector('#list-of-students-button');
+    listOfStudents.onclick = function () {
+        let Arrlist = teacher.getListOfStudentsByAverageMark();
+        let str = "";
+        Arrlist.forEach(item => {
+            str += "<li>Имя:" + item.name + " Фамилия: " + item.surname + " Возраст: " + item.age + " Средний бал: " + item.averageMark() + "</li>";
         })
+        document.getElementById('stud-list').innerHTML = str;
     }
-
-    static getAnimal(key, value) {
-        return shalter.find(function (animal, index) {
-            animal[key] === value;
-        })
-    }
-
-    changeName(number, newName) {
-        let findedAnimal = Animal.getAnimal('number', number);
-        if(!findedAnimal) return;
-
-        findedAnimal.name = newName;
-    }
-
 }

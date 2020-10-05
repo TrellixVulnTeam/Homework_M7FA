@@ -1,3 +1,34 @@
+function validateForm(elements) {
+    let valid = true;
+    let validTypes = ['text', 'number'];
+    for (const elem of elements) {
+
+        if (validTypes.includes(elem.type)) {
+            if (!elem.value.length) {
+                valid = false;
+                elem.classList.add('invalid');
+                elem.classList.remove('valid');
+            } else if (elem.classList.contains('marks')) {
+                if (Number(elem.value) < 1 || Number(elem.value) > 10) {
+                    valid = false;
+                    elem.classList.add('invalid');
+                    elem.classList.remove('valid');
+                } else {
+                    elem.classList.add('valid');
+                    elem.classList.remove('invalid')
+                }
+            } else {
+                elem.classList.add('valid');
+                elem.classList.remove('invalid')
+            }
+        }
+
+    }
+
+    return valid;
+}
+
+
 class Human {
     constructor(config) {
         this.name = config.name;
@@ -107,16 +138,30 @@ function init() {
     // первая кнопка
     let addStudentButton = document.querySelector('#add-student-button');
 
+    let errorSpan = document.createElement('span');
+    errorSpan.classList.add('message');
     addStudentButton.onclick = function () {
         let addStudentForm = document.getElementById('add-student-form');
 
-        let childForm = addStudentForm.children;
+        let elementsForm = addStudentForm.elements;
+        console.log(elementsForm);
 
         let name = addStudentForm.fName.value;
         let surname = addStudentForm.lName.value;
         let age = +addStudentForm.age.value;
-        let marks = addStudentForm.marks.value.split(' ').map(Number);
-
+        if (!validateForm(elementsForm)) {
+            errorSpan.classList.add('error');
+            errorSpan.textContent = 'Заполните все поля правильно!';
+            addStudentForm.append(errorSpan);
+            return false;
+        } else {
+            errorSpan.classList.remove('error');
+        }
+        let marks = [];
+        let listOfMarks = document.querySelectorAll('.marks');
+        for (const input of listOfMarks) {
+            marks.push(Number(input.value));
+        }
         teacher.addStudentInGroup({
             name,
             surname,
