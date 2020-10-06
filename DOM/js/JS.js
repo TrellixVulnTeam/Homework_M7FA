@@ -2,7 +2,6 @@ function validateForm(elements) {
     let valid = true;
     let validTypes = ['text', 'number'];
     for (const elem of elements) {
-
         if (validTypes.includes(elem.type)) {
             if (!elem.value.length) {
                 valid = false;
@@ -22,7 +21,6 @@ function validateForm(elements) {
                 elem.classList.remove('invalid')
             }
         }
-
     }
 
     return valid;
@@ -144,11 +142,11 @@ function init() {
         let addStudentForm = document.getElementById('add-student-form');
 
         let elementsForm = addStudentForm.elements;
-        console.log(elementsForm);
 
         let name = addStudentForm.fName.value;
         let surname = addStudentForm.lName.value;
         let age = +addStudentForm.age.value;
+
         if (!validateForm(elementsForm)) {
             errorSpan.classList.add('error');
             errorSpan.textContent = 'Заполните все поля правильно!';
