@@ -42,11 +42,12 @@ class Order {
     }
 }
 
-let ordersList = new StoreService();
+
 
 window.onload = init;
 
 function init() {
+    let ordersList = new StoreService();
     function SayThankYou() {
         InfoSpan.innerHTML = "Спасибо за ваш ответ!";
     }
@@ -130,15 +131,15 @@ function init() {
             section.append(InfoSpan);
             setTimeout(function () {
                 InfoSpan.innerHTML = "Мы приготовили ваш заказ. Наш курьер уже спешит вам ее доставить"
+                ordersList.itemsChangeStatus("Ordered", "Coocked");
             }, 3000);
-            ordersList.itemsChangeStatus("Ordered", "Coocked");
             setTimeout(function () {
                 InfoSpan.innerHTML = "Доставка..."
             }, 6000);
             setTimeout(function () {
                 InfoSpan.innerHTML = "Заказ доставлен."
+                ordersList.itemsChangeStatus("Coocked", "Delivered");
             }, 9000);
-            ordersList.itemsChangeStatus("Coocked", "Delivered");
             setTimeout(function () {
                 InfoSpan.innerHTML = "Вам все понравилось?"
                 InfoSpan.append(likeBtn);
