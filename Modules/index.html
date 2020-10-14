@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Order Pizza</title>
+    <script type="module" src="js/validation.js"></script>
+    <script type="module" src="js/Store.js"></script>
+    <script type="module" src="js/Order.js"></script>
+    <script type="module" src="main.js"></script>
+
+</head>
+
+<body>
+    <section>
+        <div class="container-fluid" id="order">
+            <div class="row">
+                <div class="col-sm" id="OrderCol">
+                    <form id='MakeOrderForm'>
+                        <h4>Соберите свою пиццу</h4><img src="Photo/pizza_PNG44093.png" alt="Pizza" id="pizzaIcon">
+                        <hr>
+                        <label>Размер пиццы:</label>
+                        <label for="radioSize1">Маленькая</label><input type="radio" name="size" value="small"
+                            class="radioBtn" id="radioSize1">
+                        <label for="radioSize2">Средняя</label><input type="radio" name="size" value="middle"
+                            class="radioBtn" id="radioSize2" checked>
+                        <label for="radioSize3">Большая</label><input type="radio" name="size" value="big"
+                            class="radioBtn" id="radioSize3">
+                        <hr>
+                        <h4>Ингридиенты</h4>
+                        <p>Выберете минимум 3 ингридиента</p>
+                        <hr>
+                        <label for="">Оливки</label><input type="checkbox" class="IngridientsCb" value="olives">
+                        <label for="">Кукуруза</label><input type="checkbox" class="IngridientsCb" value="corn">
+                        <label for="">Грибы</label><input type="checkbox" class="IngridientsCb" value="mushroom">
+                        <label for="">Ананас</label><input type="checkbox" class="IngridientsCb" value="pineaple">
+                        <label for="">Перец</label><input type="checkbox" class="IngridientsCb" value="pepper">
+                        <hr>
+                        <button id="orderBtn">Заказать</button>
+                </div>
+    </section>
+    
+    <script src=" https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous">
+    </script>
+
+</body>
+
+</html>

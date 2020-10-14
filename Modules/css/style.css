@@ -1,0 +1,113 @@
+#order {
+    background: url("../Photo/Pizza_Chili_pepper_Garlic_Ham_Cutting_board_575962_1280x853.jpg");
+    background-size: cover;
+    height: 750px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    /*Центрирование по горизонтали*/
+    align-items: center;
+    /*Центрирование по вертикали */
+}
+
+#MakeOrderForm {
+    padding-top: 12px;
+    padding-bottom: 15px;
+    text-align: center;
+    background-color: lemonchiffon;
+    border-radius: 20px;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 17px;
+    width: 450px;
+}
+
+#MakeOrderForm h4 {
+    display: inline;
+    margin-right: 5px;
+}
+
+#pizzaIcon {
+    height: 30px;
+    width: 30px;
+}
+
+.radioBtn {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#IngridientsImg {
+    height: 50px;
+    width: 50px;
+    border-radius: 3px;
+}
+
+.IngridientsCb {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#orderBtn {
+
+    border: 3px royalblue solid;
+    border-radius: 5px;
+    background-color: white;
+    outline: none;
+}
+
+#orderBtn:hover {
+    color: white;
+    background-color: royalblue;
+}
+
+#orderBtn:active {
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
+form.hidden {
+    display: none;
+}
+
+.message {
+    display: none;
+}
+
+.infiSpan {
+    background-color: lemonchiffon;
+    border-radius: 20px;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 20px;
+    text-align: center;
+    padding: 15px;
+    height: 100px;
+}
+
+.message.error {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 80px;
+    font-weight: bold;
+    color: #fff;
+    background-color: red;
+    border-radius: 4px;
+    height: 60px;
+    width: 265px;
+    line-height: 20px;
+    padding: 7px;
+}
+
+.likeBtn {
+    height: 40px;
+    width: 40px;
+    border-radius: 5px;
+    margin-left: 5px;
+}
+
+.disLikeBtn {
+    height: 40px;
+    width: 40px;
+    border-radius: 5px;
+    margin-left: 5px;
+}
