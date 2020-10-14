@@ -18,9 +18,7 @@ class StoreService {
             item[key] === value;
         })
     }
-    orderBySize(value) {
-        return this.store.fing(item => item.size = value);
-    }
+
     itemsChangeStatus(value, newStatus) {
         return this.store.filter(item => item.status == value).map(item => item.status = newStatus);
     }
@@ -28,7 +26,6 @@ class StoreService {
 
 
 class Order {
-    orders = [];
     constructor(config) {
         this.size = config.size;
         this.ingridients = config.ingridients;
@@ -37,19 +34,45 @@ class Order {
     addOrder(data) {
         OrdersList.setItem(new Order(data))
     }
-    changeStatus(newValue) {
-        let order = OrdersList.itemGetStatus()
+    static getOrderBySize(value) {
+        return ordersList.getItem('size', value);
+    }
+
+    static getOrderByStatus(value) {
+        return ordersList.getItem('status', value);
     }
 }
 
+function validate(elements) {
+    let valid = false;
+    let count = 0;
+    for (const checkBox of elements) {
+        if (checkBox.checked) {
+            count++
+        }
+        if (count > 2) {
+            valid = true;
+        }
+    }
+    return valid;
+}
 
+let ordersList = new StoreService();
 
 window.onload = init;
 
 function init() {
-    let ordersList = new StoreService();
+
     function SayThankYou() {
         InfoSpan.innerHTML = "Спасибо за ваш ответ!";
+    }
+    function createImg(src, height, width, alt) {
+        let img = document.createElement("img");
+        img.setAttribute("src", src);
+        img.setAttribute("height", height);
+        img.setAttribute("width", width);
+        img.setAttribute("alt", alt);
+        return img
     }
 
     // создание спанов об для ошибок и информации о заказе
@@ -59,25 +82,21 @@ function init() {
     InfoSpan.classList.add('infiSpan');
 
     // создание кнопок и изображений для окна "Оценки сервиса"
+    //Кнопка лайк
     let likeBtn = document.createElement('button');
     likeBtn.classList.add("likeBtn");
-    let likeImg = document.createElement("img");
-    likeImg.setAttribute("src", "Photo/Likee.png");
-    likeImg.setAttribute("height", "30");
-    likeImg.setAttribute("width", "30");
-    likeImg.setAttribute("alt", "like");
+    let likeImg = createImg("Photo/Likee.png", "30", "30", "like");
     likeBtn.append(likeImg);
+    //Кнопка дизлайк
     let disLikeBtn = document.createElement('button');
     disLikeBtn.classList.add("disLikeBtn");
-    let dislikeImg = document.createElement("img");
-    dislikeImg.setAttribute("src", "Photo/dislike_PNG19.png");
-    dislikeImg.setAttribute("height", "30");
-    dislikeImg.setAttribute("width", "30");
-    dislikeImg.setAttribute("alt", "like");
+    let dislikeImg = createImg("Photo/dislike_PNG19.png", "30", "30", "dislLike");
     disLikeBtn.append(dislikeImg);
 
+    // Добавляем событие на кнопки оставить отзыв
     likeBtn.onclick = SayThankYou;
     disLikeBtn.onclick = SayThankYou;
+
     // Событие кнопки заказа
     btnMakeOrder = document.querySelector("#orderBtn");
     btnMakeOrder.onclick = function () {
@@ -132,6 +151,8 @@ function init() {
             setTimeout(function () {
                 InfoSpan.innerHTML = "Мы приготовили ваш заказ. Наш курьер уже спешит вам ее доставить"
                 ordersList.itemsChangeStatus("Ordered", "Coocked");
+                let coockedOrder = Order.getOrderByStatus("Coocked")
+                console.log(coockedOrder);
             }, 3000);
             setTimeout(function () {
                 InfoSpan.innerHTML = "Доставка..."
@@ -149,18 +170,4 @@ function init() {
         }
     }
 
-}
-
-function validate(elements) {
-    let valid = false;
-    let count = 0;
-    for (const checkBox of elements) {
-        if (checkBox.checked) {
-            count++
-        }
-        if (count > 2) {
-            valid = true;
-        }
-    }
-    return valid;
 }
