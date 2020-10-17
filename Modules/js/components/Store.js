@@ -1,4 +1,4 @@
-class StoreService {
+export default class StoreService {
     store = [];
     constructor(initialStore = []) {
         this.shalter = initialStore;

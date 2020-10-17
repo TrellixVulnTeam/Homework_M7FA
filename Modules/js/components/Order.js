@@ -1,11 +1,16 @@
-class Order {
+import StoreService from './Store.js';
+
+export const ordersList = new StoreService();
+
+
+export class Order {
     constructor(config) {
         this.size = config.size;
         this.ingridients = config.ingridients;
         this.status = config.status;
     }
     addOrder(data) {
-        OrdersList.setItem(new Order(data))
+        ordersList.setItem(new Order(data))
     }
     static getOrderBySize(value) {
         return ordersList.getItem('size', value);

@@ -1,15 +1,18 @@
 import {
-    validate
-} from './js/validation.js';
+    Order,
+    ordersList
+} from "./components/Order.js";
 
-console.log(validate);
+import {
+    validate
+} from "./components/validation.js";
 
 window.onload = init;
 
 function init() {
     function SayThankYou() {
         InfoSpan.innerHTML = "Спасибо за ваш ответ!";
-    }s
+    }
 
     function createImg(src, height, width, alt) {
         let img = document.createElement("img");
@@ -43,7 +46,7 @@ function init() {
     disLikeBtn.onclick = SayThankYou;
 
     // Событие кнопки заказа
-    btnMakeOrder = document.querySelector("#orderBtn");
+    let btnMakeOrder = document.querySelector("#orderBtn");
     btnMakeOrder.onclick = function () {
         let section = document.querySelector("#OrderCol");
         let makeOrderForm = document.querySelector("#MakeOrderForm");
@@ -97,7 +100,6 @@ function init() {
                 InfoSpan.innerHTML = "Мы приготовили ваш заказ. Наш курьер уже спешит вам ее доставить"
                 ordersList.itemsChangeStatus("Ordered", "Coocked");
                 let coockedOrder = Order.getOrderByStatus("Coocked")
-                console.log(coockedOrder);
             }, 3000);
             setTimeout(function () {
                 InfoSpan.innerHTML = "Доставка..."
