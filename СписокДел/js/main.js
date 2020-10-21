@@ -11,7 +11,12 @@ function init() {
     function removeOrAddSelected(target) {
         target.classList.toggle('selected');
     }
-
+    function removeSelected(target) {
+        target.classList.remove('selected');
+    }
+    function addSelected(target) {
+        target.classList.add('selected');
+    }
     function sortList(list) {
         var i, switching, b, shouldSwitch;
         switching = true;
@@ -91,17 +96,20 @@ function init() {
 
     let divTasks = document.querySelector("#divTasks");
     let ulTaskList = document.querySelector("#ulTaskListSecond");
-    
-    ulTaskList.addEventListener("click", function (e) {
-        console.log(e);
 
+    ulTaskList.addEventListener("click", function (e) {
         if (e.target == this) {
             return false;
         }
-        if (!e.ctrlKey) {
-            clearSelected(this.children);
+        if (e.ctrlKey) {
+            removeSelected(e.target);
+            return false;
         }
-        removeOrAddSelected(e.target);
+        if(e.target.classList.contains("selected")){
+            clearSelected(this.children);
+        } else {
+            addSelected(e.target);
+        }
     });
 
     new taskListMenu(divTasks);
