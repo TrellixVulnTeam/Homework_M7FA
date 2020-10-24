@@ -176,12 +176,7 @@ function startGame() {
         }
     }
 
-    function clearSnake() {
-        let cells = gridContainer.querySelectorAll('.snake');
-        for (const cell of cells) {
-            cell.className = 'snake-cell';
-        }
-    }
+
 
     function generateBoxForEat() {
         let cell = getRandomInt(0, gridCount);
@@ -194,8 +189,13 @@ function startGame() {
     function getRandomInt(min, max) {
         return Math.floor(Math.random() * (max - min)) + min;
     }
+}
 
-
+function clearSnake() {
+    let cells = gridContainer.querySelectorAll('.snake');
+    for (const cell of cells) {
+        cell.className = 'snake-cell';
+    }
 }
 // ----------------------------------
 // дополнить эту функцию - вернуть все данные в начальное состояние
@@ -203,6 +203,10 @@ function startGame() {
 function endGame(message = 'Game Over!') {
     clearTimeout(processGame);
     snake = createSnakeData(Math.floor(gridCount / 2), Math.floor(gridCount / 2), 5);
+    food.remove();
+    clearSnake();
+    let score = document.querySelector(".score b");
+    score.innerHTML = "0";
 }
 // ----------------------------------
 
