@@ -30,9 +30,10 @@ function updateDirection(event) {
 
 
 
+
 function init() {
     gridContainer = find('#snake-container');
-    let messageMox = find('#message');
+
 
     initGrid(gridCount, gridContainer);
 
@@ -41,15 +42,11 @@ function init() {
     let endBtn = document.querySelector("#end-game");
 
     function startHandler() {
-        startBtn.style.display = "none";
-        endBtn.style.display = "inline";
-        startGame();
+        startGame(startBtn, endBtn);
     }
 
     function endHandler() {
-        endGame();
-        startBtn.style.display = "inline";
-        endBtn.style.display = "none";
+        endGame(startBtn, endBtn);
     }
 
 
@@ -66,7 +63,6 @@ function createSnakeData(cell, row, count) {
     let arr = [];
 
     for (let index = 0; index < count; index++) {
-
         arr.push({
             cell: cell + index,
             row
@@ -84,25 +80,50 @@ function createFood() {
     return food;
 }
 
-function startGame() {
-    let score = document.querySelector(".score b");
+function startGame(startBtn, endBtn) {
+    startBtn.style.display = "none";
+    endBtn.style.display = "inline";
+    let messageBox = find("#message");
+    messageBox.textContent = "Good Luck!";
+    let score = find(".score b");
     let count = 0;
     score.innerHTML = `${count}`
     let randomBox = generateBoxForEat();
 
-    updateSnake();
+    updateSnake(startBtn, endBtn);
     processGame = setInterval(() => {
-        let {
-            cell,
-            row
-        } = snake[0];
-
-        // ----------------------------------
-        // Нужно чтобы ф-ция noWallMode (реализует возможность змейки проходить через стены) работала так
         // let {
         //     cell,
         //     row
-        // } = noWallMode(snake[0])
+        // } = snake[0];
+
+        function noWallMode({
+            cell,
+            row
+        }) {
+            if (cell == 0 && direction == "left") {
+                cell = 13;
+            } else if (cell == 12 && direction == "right") {
+                cell = -1;
+            }
+
+            if (row == 0 && direction == "up") {
+                row = 13;
+            } else if (row == 12 && direction == "down") {
+                row = -1;
+            }
+            return {
+                cell,
+                row
+            };
+        }
+
+        // ----------------------------------
+        // Нужно чтобы ф-ция noWallMode (реализует возможность змейки проходить через стены) работала так
+        let {
+            cell,
+            row
+        } = noWallMode(snake[0]);
         // ----------------------------------
 
         switch (direction) {
@@ -137,7 +158,7 @@ function startGame() {
         }
 
         console.log(snake[0].cell, snake[0].row, snake.length);
-        updateSnake();
+        updateSnake(startBtn, endBtn);
     }, speed);
 
 
@@ -152,7 +173,15 @@ function startGame() {
         }
     }
 
-    function updateSnake() {
+    function checkOnTailCrush(startBtn, endBtn) {
+        for (let index = 1; index < snake.length; index++) {
+            if (snake[0].row == snake[index].row && snake[0].cell == snake[index].cell) {
+                endGame(startBtn, endBtn);
+            }
+        }
+    }
+
+    function updateSnake(startBtn, endBtn) {
         clearSnake();
         // ---------------------------------------
         // написать ф-цию checkOnEated, которая проверяет съела ли змейка еду,
@@ -162,7 +191,7 @@ function startGame() {
 
         // ----------------------------------
         // написать ф-цию checkOnTailCrush, которая проверяет врезалась ли голова змейки в себя же, если да - завершить игру
-        // checkOnTailCrush();
+
         // ---------------------------------------
 
         for (const [index, snakePart] of snake.entries()) {
@@ -172,8 +201,8 @@ function startGame() {
             } else {
                 cell.classList.add('snake-body', 'snake');
             }
-
         }
+        checkOnTailCrush(startBtn, endBtn);
     }
 
 
@@ -200,13 +229,18 @@ function clearSnake() {
 // ----------------------------------
 // дополнить эту функцию - вернуть все данные в начальное состояние
 // и использовать функцию во всех случаях. где игра завершается
-function endGame(message = 'Game Over!') {
+function endGame(startBtn, endBtn) {
     clearTimeout(processGame);
     snake = createSnakeData(Math.floor(gridCount / 2), Math.floor(gridCount / 2), 5);
     food.remove();
     clearSnake();
     let score = document.querySelector(".score b");
     score.innerHTML = "0";
+    direction = 'left';
+    startBtn.style.display = "inline";
+    endBtn.style.display = "none";
+    let messageBox = find("#message");
+    messageBox.textContent = "Game over!";
 }
 // ----------------------------------
 

@@ -47,16 +47,20 @@ section {
 
 .controls button {
     width: 115px;
+    margin-left: 50px;
+
 }
 
 .controls .label {
     font-weight: bold;
     display: block;
     margin-bottom: 10px;
+    margin-left: 10px;
 }
 
 .controls select {
     padding: 5px;
+    margin-left: 10px;
 }
 
 #message, span.score {
