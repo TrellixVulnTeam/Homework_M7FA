@@ -8,6 +8,8 @@
     background-color: gainsboro;
     border-radius: 10px;
     padding: 5px;
+    padding-left: 20px;
+    padding-bottom: 20px;
     margin-top: 100px;
     width: 400px;
 }
@@ -18,6 +20,11 @@
     outline: none;
     border: 2px, black;
 }
+
+#reg-form input:focus {
+    background-color: papayawhip;
+}
+
 
 #registerBtn {
     border: 3px royalblue solid;
@@ -41,11 +48,12 @@
 .valid {
     border: 2px green solid;
 }
+
 .invalid {
     border: 2px red solid;
 }
 
 .error {
-    color:red;
+    color: red;
     display: block;
 }
