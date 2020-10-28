@@ -1,0 +1,51 @@
+#register-block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#reg-form {
+    background-color: gainsboro;
+    border-radius: 10px;
+    padding: 5px;
+    margin-top: 100px;
+    width: 400px;
+}
+
+#reg-form input {
+    display: block;
+    border-radius: 5px;
+    outline: none;
+    border: 2px, black;
+}
+
+#registerBtn {
+    border: 3px royalblue solid;
+    border-radius: 5px;
+    background-color: white;
+    outline: none;
+    margin-top: 5px;
+    width: 110px;
+}
+
+#registerBtn:hover {
+    color: white;
+    background-color: royalblue;
+}
+
+#registerBtn:active {
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
+.valid {
+    border: 2px green solid;
+}
+.invalid {
+    border: 2px red solid;
+}
+
+.error {
+    color:red;
+    display: block;
+}

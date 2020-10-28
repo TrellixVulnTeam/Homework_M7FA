@@ -11,44 +11,13 @@ function init() {
     function removeOrAddSelected(target) {
         target.classList.toggle('selected');
     }
+
     function removeSelected(target) {
         target.classList.remove('selected');
     }
+
     function addSelected(target) {
         target.classList.add('selected');
-    }
-    function sortList(list) {
-        var i, switching, b, shouldSwitch;
-        switching = true;
-        /*Make a loop that will continue until
-        no switching has been done:*/
-        while (switching) {
-            //start by saying: no switching is done:
-            switching = false;
-            b = list.getElementsByTagName("LI");
-            //Loop through all list-items:
-            for (i = 0; i < (b.length - 1); i++) {
-                if (b[i].classList.contains("selected")) {
-                    //start by saying there should be no switching:
-                    shouldSwitch = false;
-                    /*check if the next item should
-                    switch place with the current item:*/
-                    if (b[i].innerHTML.toLowerCase() > b[i + 1].innerHTML.toLowerCase()) {
-                        /*if next item is alphabetically
-                        lower than current item, mark as a switch
-                        and break the loop:*/
-                        shouldSwitch = true;
-                        break;
-                    }
-                }
-            }
-            if (shouldSwitch) {
-                /*If a switch has been marked, make the switch
-                and mark the switch as done:*/
-                b[i].parentNode.insertBefore(b[i + 1], b[i]);
-                switching = true;
-            }
-        }
     }
 
     function createLi(text) {
@@ -73,17 +42,25 @@ function init() {
         }
 
         delete() {
-            for (const elem of ulTaskList.children) {
-                if (elem.classList.contains('selected')) {
-                    // ulTaskList.removeChild(elem);
-                    elem.remove();
-                }
-            }
+            let selected = document.querySelectorAll('.selected');
+            selected.forEach((item) => {
+                item.remove();
+            })
         }
 
         sort() {
-            sortList(ulTaskList);
+            [].sort.call(ulTaskList.children, (a,b) => {
+                
+            });
+            
+                        // [].forEach.call(ulTaskList.children, (item) => {
+            //     if (item.classList.contains('selected')) {
+            //         ulTaskList.prepend(item);
+            //     }
+            // })
+            
         }
+
         onClick(event) {
             let action = event.target.dataset.action;
             if (action) {
@@ -98,18 +75,23 @@ function init() {
     let ulTaskList = document.querySelector("#ulTaskListSecond");
 
     ulTaskList.addEventListener("click", function (e) {
+
         if (e.target == this) {
             return false;
         }
+
         if (e.ctrlKey) {
+            removeOrAddSelected(e.target);
+            return false;
+        } else if (e.target.classList.contains("selected")) {
             removeSelected(e.target);
             return false;
-        }
-        if(e.target.classList.contains("selected")){
-            clearSelected(this.children);
         } else {
-            addSelected(e.target);
+            clearSelected(this.children);
         }
+        removeOrAddSelected(e.target);
+
+
     });
 
     new taskListMenu(divTasks);
