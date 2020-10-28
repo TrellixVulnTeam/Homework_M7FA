@@ -17,9 +17,10 @@ function init() {
     let validName = false;
     let validPassword = false;
 
-    function createErrorSpan() {
+    function createErrorSpan(nodeToAdd) {
         let errorSpan = document.createElement("span");
         errorSpan.classList.add("error");
+        nodeToAdd.after(errorSpan);
         return errorSpan;
     }
 
@@ -27,8 +28,15 @@ function init() {
         span.innerHTML = massage;
     }
 
+    let mailSpanInfo = createErrorSpan(inputEmail);
+    let nameSpanInfo = createErrorSpan(inputName);
+    let passSpanInfo = createErrorSpan(inputPassword);
+    let passConfSpanInfo = createErrorSpan(inputPasswordConfirm);
+
+    console.log(mailSpanInfo);
+
     function validation() {
-        console.log(validEmail, validName, validPassword);
+
         if (validEmail && validName && validPassword) {
             regBtn.removeAttribute("disabled");
         }
@@ -38,9 +46,11 @@ function init() {
         if (this.value.match(mailformat)) {
             this.classList.remove("invalid");
             validEmail = true;
+            changeText(mailSpanInfo, "");
         } else {
             this.classList.add("invalid");
             validEmail = false;
+            changeText(mailSpanInfo, "Invalid Email");
         }
         validation();
     }
@@ -49,9 +59,11 @@ function init() {
         if (!this.value.length) {
             this.classList.add("invalid");
             validName = false;
+            changeText(nameSpanInfo, "Invalid Name");
         } else {
             this.classList.remove("invalid");
             validName = true;
+            changeText(nameSpanInfo, "");
         }
         validation();
     }
@@ -59,8 +71,10 @@ function init() {
     inputPassword.oninput = function () {
         if (!this.value.length) {
             this.classList.add("invalid");
+            changeText(passSpanInfo, "Invalid Password");
         } else {
             this.classList.remove("invalid");
+            changeText(passSpanInfo, "");
         }
         validation();
     }
@@ -69,9 +83,11 @@ function init() {
         if (this.value !== inputPassword.value) {
             this.classList.add("invalid");
             validPassword = false;
+            changeText(passConfSpanInfo, "Password not equal");
         } else {
             this.classList.remove("invalid");
             validPassword = true;
+            changeText(passConfSpanInfo, "");
         }
         validation();
     }
