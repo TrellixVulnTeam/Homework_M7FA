@@ -49,17 +49,13 @@ function init() {
         }
 
         sort() {
-            [].sort.call(ulTaskList.children, (a,b) => {
-                
-            });
-            
-                        // [].forEach.call(ulTaskList.children, (item) => {
-            //     if (item.classList.contains('selected')) {
-            //         ulTaskList.prepend(item);
-            //     }
-            // })
-            
+            [].forEach.call(ulTaskList.children, (item) => {
+                if (item.classList.contains('selected')) {
+                    ulTaskList.prepend(item);
+                }
+            })
         }
+
 
         onClick(event) {
             let action = event.target.dataset.action;
