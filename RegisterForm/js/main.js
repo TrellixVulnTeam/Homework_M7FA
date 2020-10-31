@@ -3,19 +3,20 @@ document.addEventListener('DOMContentLoaded', init);
 function init() {
 
     let form = document.querySelector("#reg-form");
-
+    let inputs = document.querySelectorAll('#reg-form input');
 
     let formElements = form.elements;
+
     let inputEmail = formElements.mail;
     let inputName = formElements.name;
     let inputPassword = formElements.password;
     let inputPasswordConfirm = formElements.passwordConfirm;
+
     let regBtn = document.querySelector("#registerBtn");
 
-
-    let validEmail = false;
-    let validName = false;
-    let validPassword = false;
+    function changeText(span, massage) {
+        span.innerHTML = massage;
+    }
 
     function createErrorSpan(nodeToAdd) {
         let errorSpan = document.createElement("span");
@@ -33,74 +34,145 @@ function init() {
     let passSpanInfo = createErrorSpan(inputPassword);
     let passConfSpanInfo = createErrorSpan(inputPasswordConfirm);
 
-    console.log(mailSpanInfo);
 
-    function validation() {
+    function changeAtributeDisplayToNone(elem) {
+        elem.style.display = "none";
+    }
 
-        if (validEmail && validName && validPassword) {
+    function changeAtributeDisplayToBlock(elem) {
+        elem.style.display = "block";
+    }
+
+    function checkAccesToBtn(inputs) {
+        let acces = true
+        for (const input of inputs) {
+            if (!input.classList.contains("valid")) {
+                acces = false;
+            }
+        }
+        return acces;
+    }
+
+    form.oninput = function (event) {
+        validationForm(event);
+        if (checkAccesToBtn(inputs)) {
             regBtn.removeAttribute("disabled");
-        }
-    }
-    inputEmail.oninput = function () {
-        let mailformat = /^[A-z0-9._-]+@[A-z0-9.-]+\.[A-z]{2,4}$/;
-        if (this.value.match(mailformat)) {
-            this.classList.remove("invalid");
-            validEmail = true;
-            changeText(mailSpanInfo, "");
         } else {
-            this.classList.add("invalid");
-            validEmail = false;
-            changeText(mailSpanInfo, "Invalid Email");
+            regBtn.setAttribute("disabled", "disabled");
         }
-        validation();
     }
 
-    inputName.oninput = function () {
-        if (!this.value.length) {
-            this.classList.add("invalid");
-            validName = false;
-            changeText(nameSpanInfo, "Invalid Name");
-        } else {
-            this.classList.remove("invalid");
-            validName = true;
-            changeText(nameSpanInfo, "");
+    function validationForm(event) {
+        switch (event.target.name) {
+            case 'mail': {
+                if (!CheckInputEmail(event.target.value)) {
+                    event.target.classList.add("invalid");
+                    event.target.classList.remove("valid");
+
+                    changeText(mailSpanInfo, "Invalid email");
+                    changeAtributeDisplayToBlock(mailSpanInfo);
+                } else {
+                    changeAtributeDisplayToNone(mailSpanInfo);
+
+                    event.target.classList.remove("invalid");
+                    event.target.classList.add("valid");
+                }
+                break;
+            }
+            case 'name': {
+                if (!checkInputName(event.target.value)) {
+                    event.target.classList.add("invalid");
+                    event.target.classList.remove("valid");
+
+                    changeText(nameSpanInfo, "Invalid name");
+                    changeAtributeDisplayToBlock(nameSpanInfo);
+                } else {
+                    changeAtributeDisplayToNone(nameSpanInfo);
+
+                    event.target.classList.remove("invalid");
+                    event.target.classList.add("valid");
+                }
+
+                break;
+            }
+            case 'password': {
+                if (!checkInputPassword(event.target.value)) {
+                    event.target.classList.add("invalid");
+                    event.target.classList.remove("valid");
+
+                    changeText(passSpanInfo, "Invalid password");
+                    changeAtributeDisplayToBlock(passSpanInfo);
+                } else {
+                    changeAtributeDisplayToNone(passSpanInfo);
+
+                    event.target.classList.remove("invalid");
+                    event.target.classList.add("valid");
+                }
+
+                break;
+            }
+            case 'passwordConfirm': {
+                if (!checkInputPasswordConfirm(event.target.value)) {
+                    event.target.classList.add("invalid");
+                    event.target.classList.remove("valid");
+
+                    changeText(passConfSpanInfo, "Passwords are not equal");
+                    changeAtributeDisplayToBlock(passConfSpanInfo);
+                } else {
+                    changeAtributeDisplayToNone(passConfSpanInfo);
+
+                    event.target.classList.remove("invalid");
+                    event.target.classList.add("valid");
+                }
+
+                break;
+            }
         }
-        validation();
-    }
 
-    inputPassword.oninput = function () {
-        if (!this.value.length) {
-            this.classList.add("invalid");
-            changeText(passSpanInfo, "Invalid Password");
-        } else {
-            this.classList.remove("invalid");
-            changeText(passSpanInfo, "");
+        function checkInputName(nameValue) {
+            let valid = true;
+            if (!nameValue.length) {
+                valid = false;
+            }
+            return valid;
         }
-        validation();
-    }
 
-    inputPasswordConfirm.oninput = function () {
-        if (this.value !== inputPassword.value) {
-            this.classList.add("invalid");
-            validPassword = false;
-            changeText(passConfSpanInfo, "Password not equal");
-        } else {
-            this.classList.remove("invalid");
-            validPassword = true;
-            changeText(passConfSpanInfo, "");
+        function checkInputPassword(passValue) {
+            let valid = true;
+            if (!passValue.length) {
+                valid = false;
+            }
+            return valid;
         }
-        validation();
-    }
 
-    form.addEventListener('submit', submit);
-
-    function submit() {
-        let Obj = {
-            Email: inputEmail.value,
-            Name: inputName.value,
-            Password: inputPassword.value
+        function checkInputPasswordConfirm(passvalueThis) {
+            let valid = true;
+            if (passvalueThis !== formElements.password.value) {
+                valid = false;
+            }
+            return valid;
         }
-        console.log(Obj);
-    }
 
+        function CheckInputEmail(mailValue) {
+            let valid = true;
+            let mailformat = /^[A-z0-9._-]+@[A-z0-9.-]+\.[A-z]{2,4}$/;
+            if (!mailValue.match(mailformat) || !mailValue.length) {
+                valid = false;
+            }
+            return valid;
+        }
+
+        form.addEventListener('submit', submit);
+
+        function submit(event) {
+            event.preventDefault();
+            let Obj = {
+                Email: inputEmail.value,
+                Name: formElements.name.value,
+                Password: formElements.password.value
+            }
+            console.log(Obj);
+        }
+
+    }
 }
