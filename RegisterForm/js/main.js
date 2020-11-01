@@ -139,7 +139,7 @@ function init() {
 
         function checkInputPassword(passValue) {
             let valid = true;
-            if (!passValue.length) {
+            if (!passValue.length || passValue !== formElements.passwordConfirm.value) {
                 valid = false;
             }
             return valid;
@@ -147,7 +147,7 @@ function init() {
 
         function checkInputPasswordConfirm(passvalueThis) {
             let valid = true;
-            if (passvalueThis !== formElements.password.value) {
+            if (!passvalueThis.length || passvalueThis !== formElements.password.value) {
                 valid = false;
             }
             return valid;
@@ -172,6 +172,7 @@ function init() {
                 Password: formElements.password.value
             }
             console.log(Obj);
+            form.reset();
         }
 
     }
