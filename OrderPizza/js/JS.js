@@ -78,7 +78,7 @@ function init() {
 
     // создание спанов об для ошибок и информации о заказе
     let form = document.querySelector("#MakeOrderForm");
-    form.onsubmit = function(event) {
+    form.onsubmit = function (event) {
         event.preventDefault();
     }
 
@@ -138,52 +138,65 @@ function init() {
 
         //Оплата
         let payment = new Promise(function (resolve, reject) {
-            let paumantStarus = confirm("Подвердить оплату?");
-            if (paumantStarus) {
-                resolve("Оплата прошла!");
-            } else {
-                reject(new Error("Оплата не прошла"));
-            }
-        })
-
-        payment.then(
-            function () {
-                errorSpan.classList.remove('error');
-                ordersList.setItem({
-                    size,
-                    ingridients,
-                    status
-                })
-                makeOrderForm.classList.add('hidden');
-                InfoSpan.innerHTML = "Ваш заказ готовиться...";
-                section.innerHTML += ``;
-                section.append(InfoSpan);
-                setTimeout(function () {
-                    InfoSpan.innerHTML = "Мы приготовили ваш заказ. Наш курьер уже спешит вам ее доставить"
-                    ordersList.itemsChangeStatus("Ordered", "Coocked");
-                    let coockedOrder = Order.getOrderByStatus("Coocked")
-                    console.log(coockedOrder);
-                }, 3000);
-                setTimeout(function () {
-                    InfoSpan.innerHTML = "Доставка..."
-                }, 6000);
-                setTimeout(function () {
-                    InfoSpan.innerHTML = "Заказ доставлен."
-                    ordersList.itemsChangeStatus("Coocked", "Delivered");
-                }, 9000);
-                setTimeout(function () {
-                    InfoSpan.innerHTML = "Вам все понравилось?"
-                    InfoSpan.append(likeBtn);
-                    InfoSpan.append(disLikeBtn);
-                }, 12000);
-
-            },
-            function () {
-                errorSpan.classList.add('error');
-                errorSpan.textContent = 'Оплата не прошла!';
-                makeOrderForm.append(errorSpan);
-                return false;
-            }
-        )
+                let paumantStarus = confirm("Подвердить оплату?");
+                if (paumantStarus) {
+                    resolve("Ваш заказ готовиться...");
+                } else {
+                    reject(new Error("Оплата не прошла"));
+                }
+            })
+            .then(
+                function (messege) {
+                    errorSpan.classList.remove('error');
+                    ordersList.setItem({
+                        size,
+                        ingridients,
+                        status
+                    })
+                    makeOrderForm.classList.add('hidden');
+                    InfoSpan.innerHTML = messege;
+                    section.innerHTML += ``;
+                    section.append(InfoSpan);
+                    return new Promise((resolve, reject) => {
+                        setTimeout(() => resolve("Мы приготовили ваш заказ. Наш курьер уже спешит вам его доставить"), 2000);
+                    }).then(
+                        function (messege) {
+                            InfoSpan.innerHTML = messege;
+                            ordersList.itemsChangeStatus("Ordered", "Coocked");
+                            let coockedOrder = Order.getOrderByStatus("Coocked")
+                            return new Promise((resolve, reject) => {
+                                setTimeout(() => resolve("Доставка..."), 2000);
+                            }).then(
+                                function (messege) {
+                                    InfoSpan.innerHTML = messege;
+                                    return new Promise((resolve, reject) => {
+                                        setTimeout(() => resolve("Заказ доставлен."), 2000);
+                                    }).then(
+                                        function (messege) {
+                                            InfoSpan.innerHTML = messege;
+                                            ordersList.itemsChangeStatus("Coocked", "Delivered");
+                                            return new Promise((resolve, reject) => {
+                                                setTimeout(() => resolve("Вам все понравилось?"), 2000);
+                                            }).then(
+                                                function (messege) {
+                                                    InfoSpan.innerHTML = messege;
+                                                    InfoSpan.append(likeBtn);
+                                                    InfoSpan.append(disLikeBtn);
+                                                }
+                                            )
+                                        })
+                                }
+                            )
+                        }
+                    )
+                },
+                function (error) {
+                    console.log(error);
+                    errorSpan.classList.add('error');
+                    errorSpan.textContent = 'Оплата не прошла!';
+                    makeOrderForm.append(errorSpan);
+                    return false;
+                }
+            )
     }
 }
