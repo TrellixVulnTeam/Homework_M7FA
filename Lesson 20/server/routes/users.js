@@ -30,16 +30,10 @@ router.get('/', function(req, res, next) {
 
 }).put('/:id', function(req, res, next, ID, newUser) {
   db.get('users').find({ id: ID }).assign(newUser).write();
-  res.status(200).json({
-    status: 'succes',
-    data: users,
-  });
+
 }).delete('/:id', function(req, res, next, ID) {
-  db.get('users').remove({ id: ID}).write()
-  res.status(200).json({
-    status: 'succes',
-    data: users,
-  });
+  let idUser = req.id;
+  db.get('users').remove({ id: idUser}).write();
 });
 
 module.exports = router;

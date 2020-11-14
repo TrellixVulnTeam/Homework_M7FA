@@ -1,7 +1,7 @@
 let boxSize = 32;
 let borderSize = 2;
 let gridCount = 13;
-let speed = 300;
+let speed = 100;
 let processGame;
 let snake = createSnakeData(Math.floor(gridCount / 2), Math.floor(gridCount / 2), 5);
 let food = createFood();
