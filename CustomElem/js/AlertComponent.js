@@ -4,11 +4,42 @@ export default class AlertComponent extends HTMLElement {
     }
 
     connectedCallback() {
+        this.attachShadow({
+            mode: "open"
+        });
         if (checkMessage(this.message)) {
-            this.innerHTML = `<p>${this.message}</p>`;
+            this.shadowRoot.innerHTML = `
+            <p>${this.message}</p>
+            <style>
+            :host {
+                display: block;
+                border: 2px black solid;
+                border-radius: 5px;
+                text-align: center;
+                margin: 5px;
+                background-color: gray;
+                padding:5px;
+                font-size:16px;
+            }
+            </style>
+            `;
         } else {
-            this.innerHTML = `<p>Вы не ввели message</p>`;
+            this.shadowRoot.innerHTML = `
+            <p>Вы не ввели message</p>
+            <style>
+            :host {
+                display: block;
+                border: 2px black solid;
+                border-radius: 5px;
+                text-align: center;
+                margin: 5px;
+                background-color: gray;
+                padding:5px;
+                font-size:16px;
+            }
+            </style>`;
         }
+
     }
 
     static get observedAttributes() {
