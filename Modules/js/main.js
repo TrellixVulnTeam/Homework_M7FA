@@ -105,7 +105,6 @@ function init() {
                 return new Promise((resolve, reject) => {
                     setTimeout(() => resolve("Мы приготовили ваш заказ. Наш курьер уже спешит вам его доставить"), 2000);
                 });
-
             },
             function (error) {
                 console.log(error);
@@ -118,18 +117,18 @@ function init() {
             ordersList.itemsChangeStatus("Ordered", "Coocked");
             let coockedOrder = Order.getOrderByStatus("Coocked")
             return new Promise((resolve, reject) => {
-                setTimeout(() => resolve("Доставка..."), 2000);
+                setTimeout(() => resolve("Доставка..."), 4000);
             });
         }).then(function (messege) {
             InfoSpan.innerHTML = messege;
             return new Promise((resolve, reject) => {
-                setTimeout(() => resolve("Заказ доставлен."), 2000);
+                setTimeout(() => resolve("Заказ доставлен."), 6000);
             });
         }).then(function (messege) {
             InfoSpan.innerHTML = messege;
             ordersList.itemsChangeStatus("Coocked", "Delivered");
             return new Promise((resolve, reject) => {
-                setTimeout(() => resolve("Вам все понравилось?"), 2000);
+                setTimeout(() => resolve("Вам все понравилось?"), 8000);
             });
         }).then(function (messege) {
             InfoSpan.innerHTML = messege;

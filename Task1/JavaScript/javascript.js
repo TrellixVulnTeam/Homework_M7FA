@@ -1,8 +1,7 @@
-window.onload = init;
-function init() {
-    let p = document.querySelector("#123");
-
-    p.addEventListener("keydown", function(e) {
-        console.log(e.keyCode);
-    })
+function countWords(str) {
+    return str.trim().split(/\s+/).length;
 }
+
+str = "fsdfsd sdfsd fsdg fsdf ";
+
+console.log(countWords(str));
